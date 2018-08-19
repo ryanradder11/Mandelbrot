@@ -1,10 +1,11 @@
 let pixelSize = 1;
-let width = 400;
-let height = 400;
-let maxIterations = 100;
+let width = 500;
+let height = 500;
+let maxIterations = 400;
 let mandelMin = -2.5;
 let mandelMax = 2.5;
-let infinity = 20;
+let infinity = 50;
+var brightness;
 
 function draw() {
 
@@ -18,8 +19,8 @@ function draw() {
                 return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
             };
 
-            var a = map(x, 0, width, mandelMin , mandelMax);
-            var b = map(y, 0, width, mandelMin, mandelMax);
+            var a = map(y, 0, height, mandelMin, mandelMax);
+            var b = map(x, 0, width, mandelMin , mandelMax);
 
             var initialA = a;
             var initialB = b;
@@ -28,13 +29,13 @@ function draw() {
 
             while(iterationCount < maxIterations){
 
-                //Echt
+                //Echt aa
                 var aa = (a * a) - (b * b);
 
-                //Complex
+                //Complex bb
                 var bb = (2 * a * b);
 
-                //De initiele waarde zijn c
+                //De initiele waarde zijn voor beide axis c
                 a = aa + initialA;
                 b = bb + initialB;
 
@@ -42,20 +43,20 @@ function draw() {
 
                 //Is het oneindig?
                 if( result >= infinity){
+                    brightness = 255;
+                    ctx.fillStyle = 'rgb('+ brightness +', '+ brightness +', '+ brightness +')';
                     break;
                 }else{
 
-                    var brightness = 0;
-
+                    brightness = 0;
                     ctx.fillStyle = 'rgb('+ brightness +', '+ brightness +', '+ brightness +')';
-                    //Teken de pixel
-                    ctx.fillRect( map(a ,mandelMin, mandelMax, 0, width )  * pixelSize, map(b, mandelMin, mandelMax, 0, height) * pixelSize, pixelSize, pixelSize);
                 }
 
                 iterationCount++;
-
             }
+            ctx.fillRect(y * pixelSize, x * pixelSize, pixelSize, pixelSize);
         }
+        ctx.fillRect(y * pixelSize, x * pixelSize, pixelSize, pixelSize);
     }
 }
 draw();
